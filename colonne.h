@@ -1,9 +1,10 @@
 //
-// Created by hechm on 21/04/2024.
+// Created by hechm on 08/05/2024.
 //
 
-#ifndef PROJETC_COLONNE_H
-#define PROJETC_COLONNE_H
+#ifndef CDATAFRAME_COLONNE_H
+#define CDATAFRAME_COLONNE_H
+
 
 #define UNTITLED1_PROJETC_H
 #include <stdio.h>
@@ -30,4 +31,4 @@ int val_superieur(COLUMN *colonne,int x);
 int val_inferieur(COLUMN* colonne, int x);
 int val_egale(COLUMN* colonne, int x);
 
-#endif //PROJETC_COLONNE_H
+#endif //CDATAFRAME_COLONNE_H

@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.27)
-project(PROJETc)
+project(CDATAFRAME)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(PROJETc main.c
-        cdataframe.c
-        cdataframe.c
-        cdataframe.c
+add_executable(CDATAFRAME
+        colonne.h
         cdataframe.h
-        main.c
-        cdataframe.c)
+        cdataframe.c
+        main.c)
+

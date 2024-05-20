@@ -1,7 +1,6 @@
 //
-// Created by hechm on 16/04/2024.
+// Created by hechm on 08/05/2024.
 //
-
 #include "cdataframe.h"
 
 int main() {
@@ -21,7 +20,7 @@ int main() {
     int valeur= get_val_pos(mycol,position);
     if (valeur!=-1){
         printf(" la valeur a la position %d est %d\n",position,valeur);
-          }
+    }
     else{
         printf("La valeur à la position %d n'existe pas !\n");
 
@@ -31,86 +30,68 @@ int main() {
     printf("Nombre de valeurs inferieures a %d : %d\n", x, val_inferieur(mycol, x));
     printf("Nombre de valeurs egales a %d: %d\n", x, val_egale(mycol, x));
     printf("Ajoutons la valeur 35 à la ligne 2\n");
+    insert_value(mycol, 35);
+    print_col(mycol);
 
     printf("Création d'un CDataframe vide :\n");
     printf("Création d'un CDataframe vide :\n");
-    CDataframe *df = creer_dataframe();
+    CDataframe* df = creation_du_cdatframe();
 
-    // Remplissage du CDataframe à partir des saisies utilisateurs
-    printf("Remplissage du CDataframe à partir des saisies utilisateur :\n");
-    remplir_dataframe_avec_saisie_utilisateur(df);
+    // Ajout d'une colonne au CDataframe
+    printf("Ajout d'une colonne au CDataframe :\n");
+    ajouter_colonne(df, mycol);
+    printf("Ajout d'une ligner au CDataframe :\n");
+    // Ajout d'une ligne au dataframe
+    int nouvelle_ligne[] = {70, 75, 80}; // Valeurs pour la nouvelle ligne
+    ajouter_ligne(df, nouvelle_ligne, 3); // Ajoute la ligne au dataframe
+
+    // Afficher le dataframe complet après l'ajout de la nouvelle ligne
+    afficher_dataframe(df);
+
 
     // Remplissage en dur du CDataframe
     printf("Remplissage en dur du CDataframe :\n");
     remplir_dataframe_en_dur(df);
-
-    // Afficher tout le CDataframe
-    printf("\nAfficher tout le contenu du CDataframe :\n");
     afficher_dataframe(df);
 
-    // Afficher une partie des lignes du CDataframe
-    int limite;
-    printf("Afficher une partie des lignes du CDataframe ( avec une limite fournie par l'utilisateur) : ");
-    scanf("%d", &limite);
-    // Afficher les lignes jusqu'à la limite fournie par l'utilisateur
-    for (int i = 0; i < limite && i < df->num_columns; i++) {
-        printf("Ligne %d : ", i + 1);
-        for (int j = 0; j < df->num_columns; j++) {
-            printf("%d ", df->columns[j]->donnee[i]);
-        }
-        printf("\n");
-    }
+    int debut = 1;
+    int fin = 3;
+    printf("Affichage d'une partie des lignes du CDataframe :\n");
+    afficher_partie_lignes(df, debut, fin);
 
-    // Afficher une partie des colonnes du CDataframe
-    printf("Afficher une partie des colonnes du CDataframe  : ");
-    scanf("%d", &limite);
-    // Afficher les colonnes jusqu'à la limite fournie par l'utilisateur
-    for (int i = 0; i < limite && i < df->num_columns; i++) {
-        printf("Colonne %d : ", i + 1);
-        for (int j = 0; j < df->columns[i]->taille_logique; j++) {
-            printf("%d ", df->columns[i]->donnee[j]);
-        }
-        printf("\n");
-    }
+    printf("Affichage d'une partie des colonnes du CDataframe :\n");
+    afficher_partie_colonnes(df, debut, fin);
 
-    // Ajouter une ligne de valeurs au CDataframe
-    printf("\nAjouter une ligne de valeurs  :\n");
-    int nouvelle_ligne[] = {1, 2, 3}; // Exemple de données pour une nouvelle ligne
-    ajouter_ligne(df, nouvelle_ligne);
+    printf("Suppression de la ligne d'index 2 du CDataframe :\n");
+    supprimer_ligne(df, 2);
+    afficher_dataframe(df);
 
-    // Supprimer une ligne de valeurs du CDataframe
-    printf("\nSupprimer une ligne de valeurs (saisir l'indice  de la ligne) : ");
-    int index_a_supprimer;
-    scanf("%d", &index_a_supprimer);
-    supprimer_ligne(df, index_a_supprimer);
+    printf("Suppression de la colonne d'index 1 du CDataframe :\n");
+    supprimer_colonne(df, 1);
+    afficher_dataframe(df);
 
-    // Ajouter une colonne au CDataframe
-    printf("\nAjouter une colonne au CDataframe :\n");
-    COLUMN *nouvelle_colonne = create_column("Nouvelle colonne");
-    ajouter_colonne(df, nouvelle_colonne);
+    printf("Renommer la première colonne du CDataframe :\n");
+    renommer_titre_colonne(df, 0, "Nouvelle colonne");
+    afficher_noms_colonnes(df);
 
-    // Supprimer une colonne du CDataframe
-    printf("Supprimer une colonne du CDataframe (saisir le titre de la colonne) : ");
-    char titre_a_supprimer[100];
-    scanf("%s", titre_a_supprimer);
-    supprimer_colonne(df, titre_a_supprimer);
+    int valeur_a_rechercher = 20;
+    printf("Vérification de l'existence de la valeur %d dans le CDataframe : %s\n",
+           valeur_a_rechercher, verifier_existence_valeur(df, valeur_a_rechercher) ? "trouvée" : "non trouvée");
 
-    // Libération de la mémoire allouée pour le CDataframe
-    liberer_dataframe(df);
+    printf("Accéder et remplacer la valeur dans la cellule (1, 0) par 99\n");
+    acceder_remplacer_valeur(df, 1, 0, 99);
+    afficher_dataframe(df);
 
+    printf("Afficher le nombre de lignes du CDataframe :\n");
+    afficher_nombre_lignes(df);
 
+    printf("Afficher le nombre de colonnes du CDataframe :\n");
+    afficher_nombre_colonnes(df);
+
+    int valeur_a_comparer = 30;
+    printf("Nombre de cellules contenant la valeur égale à %d : %d\n", valeur_a_comparer, nombre_cellules_egales(df, valeur_a_comparer));
+    printf("Nombre de cellules contenant une valeur supérieure à %d : %d\n", valeur_a_comparer, nombre_cellules_superieures(df, valeur_a_comparer));
+    printf("Nombre de cellules contenant une valeur inférieure à %d : %d\n", valeur_a_comparer, nombre_cellules_inferieures(df, valeur_a_comparer));
 
     return 0;
-
-    // Libérez la mémoire de la colonne
-    delete_column(&mycol);
-    }
-
-
-
-
-
-
-
-
-
+}
